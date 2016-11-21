@@ -1,0 +1,10 @@
+benv/
+*.pyc
+*.pyo
+*.sqlite3
+*.csv
+*.DS_Store
+*/private.py
+viewlog.txt
+baseballdatabank-master/*
+node_modules
