@@ -8,3 +8,5 @@ benv/
 viewlog.txt
 baseballdatabank-master/*
 node_modules
+*.sql
+*.png
