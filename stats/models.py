@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.db.models import Sum
 
 # Create your models here.
 class BabeRuthNumbers(models.Model):
@@ -73,8 +74,36 @@ class Player(models.Model):
     bbrefid = models.CharField(max_length=9, blank=True, null=True)
 
 
-    def career_batting():
-        return self.batting_stats.aggregate(models.Sum('hr'), models.Sum('h'))
+    def career_batting(self):
+        return self.batting_stats.aggregate(hr=Sum('hr'), h=Sum('h'),
+                                            g=Sum('g'), ab=Sum('ab'),
+                                            r=Sum('r'), bb=Sum('bb'),
+                                            dub=Sum('dub'), trip=Sum('trip'),
+                                            rbi=Sum('rbi'), sb=Sum('sb'),
+                                            cs=Sum('cs'), ibb=Sum('ibb'),
+                                            hbp=Sum('hbp'), sh=Sum('sh'),
+                                            sf=Sum('sf'), gidp=Sum('gidp'))
+    @staticmethod
+    def all_players_with_batting(order_stat="hr"):
+        return Player.objects.raw('''
+            SELECT 
+                master.namelast, 
+                SUM(batting.hr) as hr,
+                SUM(batting.h) as h,
+                SUM(batting.bb) as bb,
+                SUM(batting.ibb) as ibb,
+                SUM(batting.dub) as dub,
+                SUM(batting.trip) as trip,
+                SUM(batting.g) as g,
+                SUM(batting.ab) as ab,
+                SUM(batting.r) as r
+            FROM master 
+                JOIN batting ON batting.playerid=master.playerid
+            GROUP BY 
+                master.playerid 
+            ORDER BY hr DESC NULLS LAST
+            LIMIT
+                25''')
 
     def __unicode__(self):
 		return self.namefirst + ' ' + self.namelast

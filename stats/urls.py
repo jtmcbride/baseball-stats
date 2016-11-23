@@ -6,6 +6,7 @@ app_name = 'stats'
 
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
+	url(r'^api/player/([a-z0-9]{8,9})', views.player, name="player"),
 	url(r'^api/players', views.players, name="players"),
 	url(r'^api/teams', views.teams, name="teams"),
 	url(r'^api/team/([0-9]{4}[A-z]{3})', views.team, name="team"),
