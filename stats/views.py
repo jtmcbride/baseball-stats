@@ -1,14 +1,11 @@
 from django.shortcuts import render
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
+
 import json
-from .serializers import Serializer
 import pdb
 
-
 from .models import Player, Teams
-
-# player_serializer = PlayerSerializer()
 
 # Create your views here.
 
@@ -17,7 +14,11 @@ def index(request):
 
 def player(request, player_id):
 	player = Player.objects.filter(playerid=player_id)
-	response = {"status": 200, "player": player.values()[0], "careerStats": player[0].career_batting()}
+	response = {
+		"status": 200,
+		"player": player.values()[0],
+		"careerStats": player[0].career_batting()
+	}
 	return JsonResponse(response)
 
 
@@ -29,7 +30,11 @@ def players(request):
 	if 'p' in request.GET:
 		offset = int(request.GET['p']) * 25
 	players = Player.objects.all().order_by("-" + order)[offset-25:offset]
-	response = {"status": 200, "players": list(players.values()), "currentPage": offset/25}
+	response = {
+		"status": 200,
+		"players": list(players.values()),
+		"currentPage": offset/25
+	}
 	return JsonResponse(response)
 
 def team(request, team_id):
@@ -55,7 +60,11 @@ def teams(request):
 	if 'p' in request.GET:
 		offset = int(request.GET['p']) * 25
 	teams = Teams.objects.all().order_by("-" + order)[offset-25:offset]
-	response = {"status": 200, "teams": list(teams.values()), "currentPage": offset/25}
+	response = {
+		"status": 200,
+		"teams": list(teams.values()), 
+		"currentPage": offset/25
+	}
 	return JsonResponse(response)
 
 def team(request, team_id):
@@ -71,6 +80,9 @@ def team(request, team_id):
 
 def franchise(request, franch_id):
 	teams = Teams.objects.filter(franchid=franch_id.upper()).values()
-	response = {"status": 200, "teams": list(teams)}
+	response = {
+		"status": 200, 
+		"teams": list(teams)
+	}
 	return JsonResponse(response)
 

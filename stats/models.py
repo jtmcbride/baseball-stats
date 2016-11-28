@@ -39,8 +39,8 @@ class Batting(models.Model):
     gidp = models.IntegerField(blank=True, null=True)
     fk_teamid = models.ForeignKey('Teams', models.DO_NOTHING, db_column='fk_teamid', blank=True, null=True, related_name='player_batting_stats', to_field='pk_teamid')
 
-    def __unicode__(self):
-		return str(self.playerid) + ' (' + str(self.yearid) + ')'
+  #   def __unicode__(self):
+		# return str(self.playerid) + ' (' + str(self.yearid) + ')'
 
     class Meta:
         managed = False
@@ -87,8 +87,9 @@ class Player(models.Model):
     def all_players_with_batting(order_stat="hr"):
         return Player.objects.raw('''
             SELECT 
-                master.namelast, 
-                SUM(batting.hr) as hr,
+                master.namelast,
+                master.playerid,
+                SUM(batting.hr) as hom,
                 SUM(batting.h) as h,
                 SUM(batting.bb) as bb,
                 SUM(batting.ibb) as ibb,
@@ -97,11 +98,11 @@ class Player(models.Model):
                 SUM(batting.g) as g,
                 SUM(batting.ab) as ab,
                 SUM(batting.r) as r
-            FROM master 
-                JOIN batting ON batting.playerid=master.playerid
+            FROM batting 
+                JOIN master ON batting.playerid=master.playerid
             GROUP BY 
                 master.playerid 
-            ORDER BY hr DESC NULLS LAST
+            ORDER BY hom DESC NULLS LAST
             LIMIT
                 25''')
 
