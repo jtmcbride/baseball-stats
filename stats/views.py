@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
+from django.db.models import Q
+from django.db.models.functions import Concat
 
 import json
 import pdb
@@ -13,11 +15,12 @@ def index(request):
 	pass
 
 def player(request, player_id):
-	player = Player.objects.filter(playerid=player_id)
+	player = Player.objects.prefetch_related('batting_stats').filter(playerid=player_id)
 	response = {
 		"status": 200,
 		"player": player.values()[0],
-		"careerStats": player[0].career_batting()
+		# "careerStats": player[0].career_batting(),
+		"batting_stats": list(player[0].batting_stats.values())
 	}
 	return JsonResponse(response)
 
@@ -36,6 +39,16 @@ def players(request):
 		"currentPage": offset/25
 	}
 	return JsonResponse(response)
+
+def player_search(request):
+	if 'q' not in request.GET:
+		return JsonResponse({"data": "requires query(q)"})
+	else:
+		q = request.GET['q']
+		players = Player.objects.annotate(fullname=Concat('namefirst', 'namelast')).filter(Q(fullname__icontains=q))[:20].values()
+		return JsonResponse({'players': list(players)})
+
+
 
 def team(request, team_id):
 	team = Teams.objects.filter(pk_teamid=team_id.upper())
