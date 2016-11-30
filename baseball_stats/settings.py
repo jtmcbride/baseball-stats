@@ -25,9 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7feu78teu_yfvs@1way8=m851te)gkx(a+)x_r^3kyl)zi1t4%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['baseball-db.herokuapp.com']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
