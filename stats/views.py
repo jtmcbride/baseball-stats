@@ -9,10 +9,9 @@ import pdb
 
 from .models import Player, Teams
 
-# Create your views here.
-
 def index(request):
-	HttpResponse("hellooooo")
+	HttpResponse("hello")
+
 
 def player(request, player_id):
 	player = Player.objects.prefetch_related('batting_stats').filter(playerid=player_id)
@@ -40,6 +39,7 @@ def players(request):
 	}
 	return JsonResponse(response)
 
+
 def player_search(request):
 	if 'q' not in request.GET:
 		return JsonResponse({"data": "requires query(q)"})
@@ -47,7 +47,6 @@ def player_search(request):
 		q = request.GET['q']
 		players = Player.objects.annotate(fullname=Concat('namefirst', 'namelast')).filter(Q(fullname__icontains=q))[:20].values()
 		return JsonResponse({'players': list(players)})
-
 
 
 def team(request, team_id):
@@ -59,6 +58,7 @@ def team(request, team_id):
 		"player_batting_stats":  list(player_stats)
 	}
 	return JsonResponse(response)
+
 
 def teams(request):
 	order = "yearid"
@@ -80,6 +80,7 @@ def teams(request):
 	}
 	return JsonResponse(response)
 
+
 def team(request, team_id):
 	team = Teams.objects.filter(pk_teamid=team_id.upper())
 	player_stats = team[0].player_batting_stats.all().values()
@@ -98,6 +99,7 @@ def franchise(request, franch_id):
 		"teams": list(teams)
 	}
 	return JsonResponse(response)
+
 
 def babe_ruth(request, player_id):
 	player = Player.objects.get(playerid=player_id)

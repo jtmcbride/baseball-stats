@@ -1,40 +1,36 @@
-## Baseball Stats
+# BaseballDB
 
-### Background
+BaseballDB is an API that allows you to get all your baseball statistics in convenient JSON format. BaseballDB runs on a Django backend with a mySQL database. The baseb URL is https://baseball-db.herokuapp.com/api/. All data is returned in JSON format.
 
-This app will create an api for baseball statistics that can be used for any number of different apps. I will also include a small frontend app along with it that will allow data visualization through the api.
+## Endpoints
 
-### Functionality & MVP
+### /players
 
-With this app, users will be able to:
+Parameters:
 
-- [ ] Query the api directly for JSON formatted stats,
-- [ ] Stats can queried by a variety of constraints such as year, team, player, etc.
-- [ ] The frontend app will allow users to generate graphs of certain statistics
+* p: Page number, default: 1
+* order: field to order results by, default: namelast
 
-### Technologies & Technical Challenges
+Returns
 
-This app will be implemented using python and the Django framework with a postgres database. The database will be built from the Sea Lahman baseball database. The frontend will be built using React and D3.js
+### /player/:playerid
 
-There will be models for:
--Teams
--Players
--Stats
+Returns player personal data as well as statistics by year.
 
-### Implementation Timeline
+### /player/search
 
-**Day 1**: Setup the database and the django models
+Parameters:
 
-- A django app up and running
-- A database completely setup with all data
+* q: query, required
 
-**Day 2**: Api routes setup to correctly query the databse and return json formatted data
+Return players by matcing of query to first or last name.
 
-- routes for teams and players
 
-**Day 3**: Set up frontend application
+### /team
 
-- get working ajax calls to the backend
-- begin working on D3 graphs
+Parameters:
 
-**Day 4**: Get basic graph working on frontend and style it too
+* q: query, required
+
+
+
