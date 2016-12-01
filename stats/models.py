@@ -74,43 +74,51 @@ class Player(models.Model):
     bbrefid = models.CharField(max_length=9, blank=True, null=True)
 
     def babe_ruth_distance(self):
+        """Returns list of links (player and team) between player and  Babe Ruth"""
         distance = None
-        # numbers = BabeRuthNumbers.objects.filter(player_id=self.playerid)
-        # import pdb; pdb.set_trace()
-        if False:
-            pass
-            # current = numbers[0]
-        else:
-            current = None
-            stat_years = self.batting_stats.select_related('fk_teamid')
-            team_ids = []
-            for s in stat_years:
-                team_ids.append(s.fk_teamid.id)
-            team_distances = BabeRuthNumbers.objects.filter(team_id__in=team_ids)
-            for number in team_distances:
-                if current == None or number.distance < current.distance:
-                    current = number
+        current = None
+        stat_years = self.batting_stats.select_related('fk_teamid')
+        team_ids = []
+        for s in stat_years:
+            team_ids.append(s.fk_teamid.id)
+        team_distances = BabeRuthNumbers.objects.filter(team_id__in=team_ids)
+        for number in team_distances:
+            if current == None or number.distance < current.distance:
+                current = number
         if current:
             distance = current.distance
-            result = "%s %s played with " % (self.namefirst, self.namelast)
+            # result = "%s %s played with " % (self.namefirst, self.namelast)
+            result = {
+                "player": self.namefirst + " " + self.namelast,
+                "teams": [],
+                "player_links": [],
+                "distance": distance
+            }
             while current.distance > 0:
                 team = Teams.objects.get(id=current.team_id)
                 player = Player.objects.get(playerid=current.player_id)
-                result += "%s %s on the %d %s who played with " % (player.namefirst, player.namelast, team.yearid, team.name)
+                result["player_links"].append(player.namefirst + " " + player.namelast)
+                result["teams"].append(str(team.yearid) + " " + team.name)
+                # result += "%s %s on the %d %s who played with " % (player.namefirst, player.namelast, team.yearid, team.name)
                 stat_years = Batting.objects.select_related('fk_teamid').filter(playerid=current.player_id)
                 team_ids = []
                 for s in stat_years:
                     team_ids.append(s.fk_teamid.id)
                 current = BabeRuthNumbers.objects.order_by('distance').filter(team_id__in=team_ids)[0]
 
+
         else:
             result = None
         team = Teams.objects.get(id=current.team_id)
         player = Player.objects.get(playerid=current.player_id)
-        return result + "%s %s on the %d %s. %d steps away." % (player.namefirst, player.namelast, team.yearid, team.name, distance)
+        result["player_links"].append(player.namefirst + " " + player.namelast)
+        result["teams"].append(str(team.yearid) + " " + team.name)
+        # return result + "%s %s on the %d %s. %d steps away." % (player.namefirst, player.namelast, team.yearid, team.name, distance)
+        return result
 
 
     def career_batting(self):
+        """Query to return career stats"""
         return self.batting_stats.aggregate(hr=Sum('hr'), h=Sum('h'),
                                             g=Sum('g'), ab=Sum('ab'),
                                             r=Sum('r'), bb=Sum('bb'),
@@ -121,6 +129,7 @@ class Player(models.Model):
                                             sf=Sum('sf'), gidp=Sum('gidp'))
     @staticmethod
     def all_players_with_batting(order_stat="hr"):
+        """Static method to fetch group of players with carrer batting stats"""
         return Player.objects.raw('''
             SELECT 
                 master.namelast,
