@@ -73,6 +73,42 @@ class Player(models.Model):
     retroid = models.CharField(max_length=9, blank=True, null=True)
     bbrefid = models.CharField(max_length=9, blank=True, null=True)
 
+    def babe_ruth_distance(self):
+        distance = None
+        # numbers = BabeRuthNumbers.objects.filter(player_id=self.playerid)
+        # import pdb; pdb.set_trace()
+        if False:
+            pass
+            # current = numbers[0]
+        else:
+            current = None
+            stat_years = self.batting_stats.select_related('fk_teamid')
+            team_ids = []
+            for s in stat_years:
+                team_ids.append(s.fk_teamid.id)
+            team_distances = BabeRuthNumbers.objects.filter(team_id__in=team_ids)
+            for number in team_distances:
+                if current == None or number.distance < current.distance:
+                    current = number
+        if current:
+            distance = current.distance
+            result = "%s %s played with " % (self.namefirst, self.namelast)
+            while current.distance > 0:
+                team = Teams.objects.get(id=current.team_id)
+                player = Player.objects.get(playerid=current.player_id)
+                result += "%s %s on the %d %s who played with " % (player.namefirst, player.namelast, team.yearid, team.name)
+                stat_years = Batting.objects.select_related('fk_teamid').filter(playerid=current.player_id)
+                team_ids = []
+                for s in stat_years:
+                    team_ids.append(s.fk_teamid.id)
+                current = BabeRuthNumbers.objects.order_by('distance').filter(team_id__in=team_ids)[0]
+
+        else:
+            result = None
+        team = Teams.objects.get(id=current.team_id)
+        player = Player.objects.get(playerid=current.player_id)
+        return result + "%s %s on the %d %s. %d steps away." % (player.namefirst, player.namelast, team.yearid, team.name, distance)
+
 
     def career_batting(self):
         return self.batting_stats.aggregate(hr=Sum('hr'), h=Sum('h'),
