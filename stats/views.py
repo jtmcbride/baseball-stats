@@ -12,7 +12,7 @@ from .models import Player, Teams
 # Create your views here.
 
 def index(request):
-	pass
+	HttpResponse("hellooooo")
 
 def player(request, player_id):
 	player = Player.objects.prefetch_related('batting_stats').filter(playerid=player_id)
@@ -102,4 +102,4 @@ def franchise(request, franch_id):
 def babe_ruth(request, player_id):
 	player = Player.objects.get(playerid=player_id)
 	answer = player.babe_ruth_distance()
-	return JsonResponse({result: answer})
+	return JsonResponse({"result": answer})
