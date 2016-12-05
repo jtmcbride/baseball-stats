@@ -10,7 +10,7 @@ import pdb
 from .models import Player, Teams
 
 def index(request):
-	HttpResponse("hello")
+	HttpResponse("Documentation: <a>https://github.com/jtmcbride/baseball-graphs</a>")
 
 
 def player(request, player_id):
