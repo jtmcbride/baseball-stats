@@ -101,10 +101,13 @@ WSGI_APPLICATION = 'baseball_stats.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'localhost',
         'NAME': 'baseball',
+        'USER': 'postgres',
+        'PORT': '',
     }
 }
-DATABASES['default'].update(dj_database_url.config(conn_max_age=500))
+# DATABASES['default'].update(dj_database_url.config(conn_max_age=500))
 
 
 # Password validation
