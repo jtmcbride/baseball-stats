@@ -13,7 +13,8 @@ urlpatterns = [
 	url(r'^api/team/([0-9]{4}[A-z]{3})', views.team, name="team"),
 	# url(r'^api/team/([0-9]{4}[A-Z]{3})/players', views.team_players, name="team"),
 	url(r'^api/franchise/([A-z]{3})', views.franchise, name="franchise"),
-	url(r'^api/baberuth/([a-z0-9]{8,9})', views.babe_ruth, name='baberuth')
+	url(r'^api/baberuth/([a-z0-9]{8,9})', views.babe_ruth, name="baberuth"),
+	url(r'^api/baberuth$', views.babe_ruth_tree, name="tree"),
 	# url(r'^generate/', views.generate),
 	# url(r'^generate_player/', views.generate_player),
 	# url(r'^players/([0-9]+)', views.players, name='players'),

@@ -9,6 +9,8 @@ import pdb
 
 from .models import Player, Teams
 
+from .ruth_tree import tree
+
 def index(request):
 	HttpResponse("Documentation: <a>https://github.com/jtmcbride/baseball-graphs</a>")
 
@@ -105,3 +107,6 @@ def babe_ruth(request, player_id):
 	player = Player.objects.get(playerid=player_id)
 	answer = player.babe_ruth_distance()
 	return JsonResponse({"result": answer})
+
+def babe_ruth_tree(request):
+	return JsonResponse(tree)

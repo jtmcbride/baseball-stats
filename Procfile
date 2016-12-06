@@ -1,1 +1,0 @@
-web: gunicorn baseball_stats.wsgi --log-file -
