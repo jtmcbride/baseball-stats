@@ -64,8 +64,12 @@ def team(request, team_id):
 
 def teams(request):
 	if "id" in request.GET:
-		team = Teams.objects.filter(id=int(request.GET["id"]))
+		team = Teams.objects.prefetch_related("player_batting_stats__playerid").filter(id=int(request.GET["id"]))
 		response = {"team": list(team.values())[0]}
+		players = []
+		for player in team[0].player_batting_stats.all():
+			players.append(player.playerid.namefirst + " " + player.playerid.namelast)
+		response["players"] = players
 		return JsonResponse(response)
 	order = "yearid"
 	offset = 25
