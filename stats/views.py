@@ -63,6 +63,10 @@ def team(request, team_id):
 
 
 def teams(request):
+	if "id" in request.GET:
+		team = Teams.objects.filter(id=int(request.GET["id"]))
+		response = {"team": list(team.values())[0]}
+		return JsonResponse(response)
 	order = "yearid"
 	offset = 25
 	if 'order' in request.GET:
