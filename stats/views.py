@@ -12,7 +12,7 @@ from .models import Player, Teams
 from .ruth_tree import tree
 
 def index(request):
-	HttpResponse("Documentation: <a>https://github.com/jtmcbride/baseball-graphs</a>")
+	return render(request, "index.html")
 
 
 def player(request, player_id):
