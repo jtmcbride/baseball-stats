@@ -1,8 +1,8 @@
 # BaseballDB
 
-BaseballDB is an API that allows you to get all your baseball statistics in convenient JSON format. BaseballDB runs on a Django backend with a mySQL database. The base URL is https://baseball-db.herokuapp.com/api/. All data is returned in JSON format.
+BaseballDB is an API that allows you to get all your baseball statistics in convenient JSON format. BaseballDB runs on a Django backend with a Postgres database all running on AWS EC2. The base URL is http://baseballdb.online/api/. All data is returned in JSON format.
 
-An example application can be found [here](https://jtmcbride.github.io/baseball-graphs/). [Github](https://github.com/jtmcbride/baseball-graphs).
+An example application utilizing the API can be found [here](http://baseballdb.online/app/index.html). [Github](https://github.com/jtmcbride/baseball-graphs).
 
 ## Endpoints
 
