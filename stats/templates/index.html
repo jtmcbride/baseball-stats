@@ -2,71 +2,170 @@
 <html>
 <head>
 	<title>BaseballDB</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:800" rel="stylesheet">
 	<style>
+		* {
+			font-family: 'Roboto', sans-serif;
+		}
 
+		body {
+			background: beige;
+			margin: 0;
+		}
+
+		header {
+			background: #fff url('https://www.ccuathletics.com/images/2015-16/baseball-pic.jpg') no-repeat;
+			font-family: 'Open Sans', sans-serif;
+			background-position: 0 -150px;
+			color: black;
+			/*text-shadow: 2px 2px black;*/
+			background-size: cover;
+			padding: 100px;
+			text-align: center;
+			font-size: 30px;
+			font-weight: 700;
+		}
+
+		main {
+			background: white;
+			padding: 20px;
+			width: 80%;
+			margin: 0 auto;
+		}
+
+		table {
+		  border-collapse: collapse;
+		  border-radius: 3px;
+		}
+
+		td, th {
+		  border: 1px solid #999;
+		  padding: 0.5rem;
+		  text-align: left;
+		}
+
+		th {
+			font-weight: bold;
+			background: beige;
+		}
+
+		.endpoint {
+			border-bottom: 2px solid grey;
+			padding-bottom: 10px;
+		}
 	</style>
 </head>
-<body>
-	<header id="header" class="">
-		Welcome to BaseballDB!
-	</header>
-	<main>
-		<h3>
-			BaseballDB is your API for all things baseball statistics. The data is primarily based on <a href="http://www.seanlahman.com/baseball-archive/statistics/">Lahman's Baseball Database</a> with some adaptations. An example application using the API can be found <a href="/app/index.html">here</a>.
-		</h3>
-		<h2>Using the API</h2>
-		<p>The base URL for the API is http://baseballdb.online/api/.</p>
-		<h2><a id="user-content-endpoints" class="anchor" href="#endpoints" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Endpoints</h2>
+	<body>
+		<header id="header" class="">
+			Welcome to BaseballDB!
+		</header>
+		<main>
+			<h3>
+				BaseballDB is your API for all things baseball statistics. The data is primarily based on <a href="http://www.seanlahman.com/baseball-archive/statistics/">Lahman's Baseball Database</a> with some adaptations. An example application using the API can be found <a href="/app/index.html">here</a>.
+			</h3>
+			<h2>Using the API</h2>
+			<p>The base URL for the API is http://baseballdb.online/api/.</p>
+			<h2>Endpoints</h2>
+			<div class="endpoint">
 
-<h3><a id="user-content-players" class="anchor" href="#players" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>/players</h3>
+				<h3>GET: /players</h3>
 
-<p>Parameters:</p>
+				<p>Returns list of players.</p>
 
-<ul>
-<li>p: Page number, default: 1</li>
-<li>order: field to order results by, default: namelast</li>
-</ul>
+				<table>
+					<caption>Request Parameters</caption>
+					<thead>
+						<tr>
+							<th>Parameter</th><th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>p</td><td>Page Number</td>
+						</tr>
+						<tr>
+							<td>order</td><td>Field to order results by. Defalt: namelast</td>
+						</tr>
+					</tbody>
+				</table>
 
-<p>Returns list of players.</p>
+			</div>	
 
-<h3><a id="user-content-playerplayerid" class="anchor" href="#playerplayerid" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>/player/:playerid</h3>
+				<h3>GET: /player/:playerid</h3>
 
-<p>Returns player personal data as well as statistics by year.</p>
+				<p>Returns player personal data as well as statistics by year.</p>
+			</div>
 
-<h3><a id="user-content-playersearch" class="anchor" href="#playersearch" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>/player/search</h3>
+			<div class="endpoint">
 
-<p>Parameters:</p>
+				<h3>/player/search</h3>
 
-<ul>
-<li>q: query, required</li>
-</ul>
+				<p>Return players by matched to query by first or last name.</p>
 
-<p>Return players by matcing of query to first or last name.</p>
+				<table>
+					<caption>Request Parameters</caption>
+					<thead>
+						<tr>
+							<th>Parameter</th><th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>q</td><td>Query String</td>
+					</tbody>
+				</table>
 
-<h3><a id="user-content-teams" class="anchor" href="#teams" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>/teams</h3>
 
-<p>Parameters:</p>
+			</div>
 
-<ul>
-<li>p: Page number, default: 1</li>
-<li>order: field to order results by, default: year</li>
-<li>year: year to return teams from, defualt: none</li>
-</ul>
+			<div class="endpoint">
 
-<p>Returns list of players.</p>
+				<h3>GET: /teams</h3>
 
-<h3><a id="user-content-teamteamid" class="anchor" href="#teamteamid" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>/team/:teamid</h3>
+				<table>
+					<caption>Request Parameters</caption>
+					<thead>
+						<tr>
+							<th>Parameter</th><th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>p</td><td>Page Number, default: 1</td>
+						</tr>
+						<tr>
+							<td>order</td><td>Field to order results by. Defalt: year</td>
+						</tr>
+					</tbody>
+				</table>
 
-<p>Returns team data. Teamid points to a specific team for a specific year.</p>
 
-<h3><a id="user-content-franchisefranchid" class="anchor" href="#franchisefranchid" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>/franchise/:franchid</h3>
+			</div>
 
-<p>Returns all teams from a given franchise.</p>
+			<div class="endpoint">
 
-<h3><a id="user-content-baberuthplayerid" class="anchor" href="#baberuthplayerid" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>/baberuth/:playerid</h3>
+				<h3>GET: /team/:teamid</h3>
 
-<p>Returns distance from Babe Ruth for given player and information about the links in ordered lists.</p>
+				<p>Returns team data. Teamid points to a specific team for a specific year.</p>
 
-	</main>
-</body>
+			</div>
+
+			<div class="endpoint">
+
+				<h3>GET: /franchise/:franchid</h3>
+
+				<p>Returns all teams from a given franchise.</p>
+			</div>
+
+			<div class="endpoint">
+
+				<h3>GET: /baberuth/:playerid</h3>
+
+				<p>Returns distance from Babe Ruth for given player and information about the links in ordered lists.</p>
+
+			</div>
+
+		</main>
+	</body>
 </html>
