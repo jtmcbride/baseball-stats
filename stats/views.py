@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
+from django.db import connection
 from django.db.models import Q
 from django.db.models.functions import Concat
 
-import json
-import pdb
 
 from .models import Player, Teams
 
@@ -118,3 +117,35 @@ def babe_ruth(request, player_id):
 
 def babe_ruth_tree(request):
 	return JsonResponse(tree)
+
+
+def teammates(request):
+	if 'player1' in request.GET and 'player2' in request.GET:
+		playerid1 = request.GET['player1']
+		playerid2 = request.GET['player2']
+	else:
+		return JsonResponse({
+				"status": 422,
+				"error": "invalid parameters"
+			})
+	cursor = connection.cursor()
+	cursor.execute("""
+					SELECT 
+						fk_teamid 
+					FROM 
+						batting AS b1
+					JOIN
+						batting AS b2
+					ON
+						b1.fk_teamid = b2.fk_teamid
+					WHERE
+						b1.playerid = %s AND
+						b2.playerid = %s
+					""", [playerid1, playerid2])
+	rows = cursor.fetchall()
+	return JsonResponse({
+				"status": 200,
+				"teams": list(rows)
+			})
+
+

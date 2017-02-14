@@ -15,6 +15,7 @@ urlpatterns = [
 	url(r'^api/franchise/([A-z]{3})', views.franchise, name="franchise"),
 	url(r'^api/baberuth/([a-z0-9]{8,9})', views.babe_ruth, name="baberuth"),
 	url(r'^api/baberuth$', views.babe_ruth_tree, name="tree"),
+	url(r'^api/teammates$', views.teammates, name="teammates"),
 	# url(r'^generate/', views.generate),
 	# url(r'^generate_player/', views.generate_player),
 	# url(r'^players/([0-9]+)', views.players, name='players'),
