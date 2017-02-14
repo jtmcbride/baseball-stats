@@ -131,7 +131,7 @@ def teammates(request):
 	cursor = connection.cursor()
 	cursor.execute("""
 					SELECT 
-						fk_teamid 
+						b1.fk_teamid 
 					FROM 
 						batting AS b1
 					JOIN
@@ -143,9 +143,10 @@ def teammates(request):
 						b2.playerid = %s
 					""", [playerid1, playerid2])
 	rows = cursor.fetchall()
+	teams = [row[0] for row in rows]
 	return JsonResponse({
 				"status": 200,
-				"teams": list(rows)
+				"teams": teams
 			})
 
 
